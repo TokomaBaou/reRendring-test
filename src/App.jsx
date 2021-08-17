@@ -1,0 +1,28 @@
+import "./styles.css";
+import { React, useState, useCallback, useMemo } from "react";
+import { ChildArea } from "./components/ChildArea";
+
+export default function App() {
+  const [text, setText] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const onChangeText = (event) => setText(event.target.value);
+
+  const onClickOpen = () => setOpen(!open);
+
+  //処理が変わらない場合は使い回すという処理が必要
+  const onClickClose = useCallback(() => setOpen(false), [setOpen]);
+
+  const temp = useMemo(() => 1 + 3, []);
+  console.log(temp);
+
+  return (
+    <div className="App">
+      <input value={text} onChange={onChangeText} />
+      <br />
+      <br />
+      <button onClick={onClickOpen}>表示</button>
+      <ChildArea open={open} onClickClose={onClickClose} />
+    </div>
+  );
+}
